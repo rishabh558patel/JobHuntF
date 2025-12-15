@@ -64,17 +64,16 @@ const Signup = () => {
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
-    } finally{
+    } finally {
       dispatch(setLoading(false));
     }
   };
 
   useEffect(() => {
-    if(user){
+    if (user) {
       navigate("/");
     }
   }, []);
-  
 
   return (
     <div className="font-bold">
@@ -86,8 +85,9 @@ const Signup = () => {
         >
           <h1 className="font-bold text-xl mb-5">Signup</h1>
           <div className="my-2">
-            <Label>Full Name</Label>
+            <Label htmlFor="fullname">Full Name</Label>
             <Input
+              id="fullname"
               type="text"
               placeholder="patel"
               value={input.fullname}
@@ -96,8 +96,9 @@ const Signup = () => {
             />
           </div>
           <div className="my-2">
-            <Label>Email</Label>
+            <Label htmlFor="email">Email</Label>
             <Input
+              id="email"
               type="email"
               placeholder="patel@gmail.com"
               value={input.email}
@@ -106,8 +107,9 @@ const Signup = () => {
             />
           </div>
           <div className="my-2">
-            <Label>Phone Number</Label>
+            <Label htmlFor="phoneNumber">Phone Number</Label>
             <Input
+              id="phoneNumber"
               type="text"
               placeholder="1234567890"
               value={input.phoneNumber}
@@ -116,8 +118,9 @@ const Signup = () => {
             />
           </div>
           <div className="my-2">
-            <Label>Password</Label>
+            <Label htmlFor="password">Password</Label>
             <Input
+              id="password"
               type="password"
               placeholder="1234567890"
               value={input.password}
@@ -130,24 +133,24 @@ const Signup = () => {
             <div className="flex gap-4">
               <label className="flex items-center gap-2">
                 <input
+                  id="r1"
                   type="radio"
                   name="role"
                   value="student"
                   checked={input.role === "student"}
                   onChange={changeEventHandler}
-                  className="cursor-pointer w-4 h-4 text-blue-600 border-gray-300 focus:accent-blue-500"
                 />
                 <Label htmlFor="r1">Student</Label>
               </label>
 
               <label className="flex items-center gap-2">
                 <input
+                  id="r2"
                   type="radio"
                   name="role"
                   value="recruiter"
                   checked={input.role === "recruiter"}
                   onChange={changeEventHandler}
-                  className="cursor-pointer w-4 h-4 text-blue-600 border-gray-300 focus:accent-blue-500"
                 />
                 <Label htmlFor="r2">Recruiter</Label>
               </label>
@@ -155,8 +158,9 @@ const Signup = () => {
 
             {/* Profile Input */}
             <div className="flex items-center gap-2">
-              <Label>Profile</Label>
+              <Label htmlFor="profile">Profile</Label>
               <Input
+                id="profile"
                 accept="image/*"
                 type="file"
                 onChange={changeFileHandler}

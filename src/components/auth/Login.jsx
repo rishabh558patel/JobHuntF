@@ -47,17 +47,19 @@ const Login = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message);
+      toast.error(
+        error?.response?.data?.message || "Login failed. Please try again."
+      );
     } finally {
       dispatch(setLoading(false));
     }
   };
   useEffect(() => {
-    if(user){
+    if (user) {
       navigate("/");
     }
-  }, []);
-  
+  }, [user, navigate]);
+
   return (
     <div className="font-bold">
       <Navbar />
@@ -69,8 +71,9 @@ const Login = () => {
           <h1 className="font-bold text-xl mb-5">Login</h1>
 
           <div className="my-2">
-            <Label>Email</Label>
+            <Label htmlFor="email">Email</Label>
             <Input
+              id="email"
               type="email"
               placeholder="patel@gmail.com"
               value={input.email}
@@ -79,8 +82,9 @@ const Login = () => {
             />
           </div>
           <div className="my-2">
-            <Label>Password</Label>
+            <Label htmlFor="password">Password</Label>
             <Input
+              id="password"
               type="password"
               placeholder="1234567890"
               value={input.password}
@@ -93,24 +97,24 @@ const Login = () => {
             <div className="flex gap-4">
               <label className="flex items-center gap-2">
                 <input
+                  id="r1"
                   type="radio"
                   name="role"
                   value="student"
                   checked={input.role === "student"}
                   onChange={changeEventHandler}
-                  className="cursor-pointer w-4 h-4 text-blue-600 border-gray-300 focus:accent-blue-500"
                 />
                 <Label htmlFor="r1">Student</Label>
               </label>
 
               <label className="flex items-center gap-2">
                 <input
+                  id="r2"
                   type="radio"
                   name="role"
                   value="recruiter"
                   checked={input.role === "recruiter"}
                   onChange={changeEventHandler}
-                  className="cursor-pointer w-4 h-4 text-blue-600 border-gray-300 focus:accent-blue-500"
                 />
                 <Label htmlFor="r2">Recruiter</Label>
               </label>
