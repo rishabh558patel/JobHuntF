@@ -16,19 +16,33 @@ import {
 } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import UploadMandatoryNote from "./shared/UploadMandatoryNote";
 
 const UpdateProfileDialog = ({ open, setOpen }) => {
   const [loading, setLoading] = useState(false);
   const { user } = useSelector((store) => store.auth);
 
   const [input, setInput] = useState({
-    fullname: user?.fullname,
-    email: user?.email,
-    phoneNumber: user?.phoneNumber,
-    bio: user?.profile?.bio,
-    skills: user?.profile?.skills?.join(", ") || "",
-    file: user?.profile?.resume,
+    fullname: "",
+    email: "",
+    phoneNumber: "",
+    bio: "",
+    skills: "",
+    file: null,
   });
+
+  React.useEffect(() => {
+    if (user) {
+      setInput({
+        fullname: user.fullname || "",
+        email: user.email || "",
+        phoneNumber: user.phoneNumber || "",
+        bio: user.profile?.bio || "",
+        skills: user.profile?.skills?.join(", ") || "",
+        file: null, // never prefill file input
+      });
+    }
+  }, [user]);
 
   const dispatch = useDispatch();
 
@@ -38,7 +52,6 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("🔧 Update clicked");
     const formData = new FormData();
     formData.append("fullname", input.fullname);
     formData.append("email", input.email);
@@ -67,13 +80,11 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       }
     } catch (error) {
       console.log(error);
-    } finally{
+    } finally {
       setLoading(false);
     }
 
     setOpen(false);
-
-    console.log(input);
   };
 
   const fileChangeHandler = (e) => {
@@ -91,6 +102,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
           <DialogHeader>
             <DialogTitle>Update Profile</DialogTitle>
           </DialogHeader>
+          <UploadMandatoryNote />
           <form onSubmit={submitHandler}>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
@@ -155,7 +167,12 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   className="col-span-3"
                 />
               </div>
+              <hr className="my-2" />
+
               <div className="grid grid-cols-4 items-center gap-4">
+                <p className="text-xs text-gray-500 col-span-full sm:col-span-3 sm:col-start-2">
+                  PDF only. Max size 2MB.
+                </p>
                 <Label htmlFor="file" className="text-right">
                   Resume
                 </Label>
@@ -171,7 +188,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
             </div>
             <DialogFooter>
               {loading ? (
-                <Button className="w-full my-4">
+                <Button disabled className="w-full my-4">
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait
                 </Button>
               ) : (

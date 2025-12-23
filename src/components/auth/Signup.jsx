@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import Navbar from "../shared/Navbar";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import UploadMandatoryNote from "../shared/UploadMandatoryNote";
 
 const Signup = () => {
   const [input, setInput] = useState({
@@ -76,16 +77,19 @@ const Signup = () => {
   }, []);
 
   return (
-    <div className="font-bold">
+    <div>
       <Navbar />
+      <UploadMandatoryNote />
       <div className="flex items-center justify-center max-w-7xl mx-auto">
         <form
           onSubmit={submitHandler}
-          className="w-3/5 border border-gray-200 rounded-md p-4 my-10"
+          className="w-full sm:w-3/5 border border-gray-200 rounded-md p-4 my-10"
         >
           <h1 className="font-bold text-xl mb-5">Signup</h1>
           <div className="my-2">
-            <Label htmlFor="fullname">Full Name</Label>
+            <Label className="bold" htmlFor="fullname">
+              Full Name
+            </Label>
             <Input
               id="fullname"
               type="text"
@@ -96,7 +100,9 @@ const Signup = () => {
             />
           </div>
           <div className="my-2">
-            <Label htmlFor="email">Email</Label>
+            <Label className="bold" htmlFor="email">
+              Email
+            </Label>
             <Input
               id="email"
               type="email"
@@ -107,7 +113,9 @@ const Signup = () => {
             />
           </div>
           <div className="my-2">
-            <Label htmlFor="phoneNumber">Phone Number</Label>
+            <Label className="bold" htmlFor="phoneNumber">
+              Phone Number
+            </Label>
             <Input
               id="phoneNumber"
               type="text"
@@ -118,7 +126,9 @@ const Signup = () => {
             />
           </div>
           <div className="my-2">
-            <Label htmlFor="password">Password</Label>
+            <Label className="bold" htmlFor="password">
+              Password
+            </Label>
             <Input
               id="password"
               type="password"
@@ -131,7 +141,7 @@ const Signup = () => {
           <div className="flex flex-wrap items-center justify-between gap-4">
             {/* Radio Buttons */}
             <div className="flex gap-4">
-              <label className="flex items-center gap-2">
+              <label className="flex items-center gap-2 py-2 cursor-pointer">
                 <input
                   id="r1"
                   type="radio"
@@ -140,10 +150,12 @@ const Signup = () => {
                   checked={input.role === "student"}
                   onChange={changeEventHandler}
                 />
-                <Label htmlFor="r1">Student</Label>
+                <Label className="bold" htmlFor="r1">
+                  Student
+                </Label>
               </label>
 
-              <label className="flex items-center gap-2">
+              <label className="flex items-center gap-2 py-2 cursor-pointer">
                 <input
                   id="r2"
                   type="radio"
@@ -152,13 +164,18 @@ const Signup = () => {
                   checked={input.role === "recruiter"}
                   onChange={changeEventHandler}
                 />
-                <Label htmlFor="r2">Recruiter</Label>
+                <Label className="bold" htmlFor="r2">
+                  Recruiter
+                </Label>
               </label>
             </div>
 
             {/* Profile Input */}
-            <div className="flex items-center gap-2">
-              <Label htmlFor="profile">Profile</Label>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+              <Label className="bold" htmlFor="profile">
+                Profile
+              </Label>
+
               <Input
                 id="profile"
                 accept="image/*"
@@ -166,11 +183,14 @@ const Signup = () => {
                 onChange={changeFileHandler}
                 className="cursor-pointer"
               />
+              <p className="text-xs text-gray-500">
+                Upload a profile photo (JPG/PNG, max 2MB)
+              </p>
             </div>
           </div>
 
           {loading ? (
-            <Button className="w-full my-4">
+            <Button className="w-full my-4" disabled>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait
             </Button>
           ) : (
@@ -179,9 +199,12 @@ const Signup = () => {
             </Button>
           )}
 
-          <span className="text-sm">
+          <span className="text-sm text-gray-600">
             Already have an account?{" "}
-            <Link className="text-blue-600" to="/login">
+            <Link
+              className="text-blue-600 font-medium hover:underline"
+              to="/login"
+            >
               Login
             </Link>
           </span>

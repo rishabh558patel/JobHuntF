@@ -13,6 +13,7 @@ import Navbar from "../shared/Navbar";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import UploadMandatoryNote from "../shared/UploadMandatoryNote";
 
 const CompanySetup = () => {
   const params = useParams();
@@ -91,6 +92,7 @@ const CompanySetup = () => {
   return (
     <div>
       <Navbar />
+      <UploadMandatoryNote/>
       <div className="max-w-xl mx-auto my-10">
         <form onSubmit={submitHandler}>
           <div className="flex items-center gap-5 p-8">

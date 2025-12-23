@@ -43,39 +43,56 @@ const AppliedJobTable = () => {
 
   return (
     <div>
-      <Table>
-        <TableCaption>A list of your applied jobs.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Date</TableHead>
-            <TableHead>Job Role</TableHead>
-            <TableHead>Company</TableHead>
-            <TableHead className="text-right">Status</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {applications.map((app, index) => (
-            <TableRow key={index}>
-              <TableCell>
-                {new Date(app.createdAt).toLocaleDateString("en-IN")}
-              </TableCell>
-              <TableCell>{app.job?.title || "N/A"}</TableCell>
-              <TableCell>{app.job?.company?.name || "N/A"}</TableCell>
-              <TableCell className="text-right">
-                <Badge variant={
-                  app.status === "accepted"
-                    ? "success"
-                    : app.status === "rejected"
-                    ? "destructive"
-                    : "secondary"
-                }>
-                  {app.status.charAt(0).toUpperCase() + app.status.slice(1)}
-                </Badge>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      {applications.length === 0 ? (
+        <p className="text-center text-gray-500 py-10">
+          You haven’t applied to any jobs yet.
+        </p>
+      ) : (
+        <div className="w-full overflow-x-auto">
+          <Table>
+            <TableCaption>A list of jobs you have applied to.</TableCaption>
+
+            <TableHeader>
+              <TableRow>
+                <TableHead>Date</TableHead>
+                <TableHead>Job Role</TableHead>
+                <TableHead>Company</TableHead>
+                <TableHead className="text-right">Status</TableHead>
+              </TableRow>
+            </TableHeader>
+
+            <TableBody>
+              {applications.map((app, index) => (
+                <TableRow key={index}>
+                  <TableCell>
+                    {new Date(app.createdAt).toLocaleDateString("en-IN", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </TableCell>
+                  <TableCell>{app.job?.title || "N/A"}</TableCell>
+                  <TableCell>{app.job?.company?.name || "N/A"}</TableCell>
+                  <TableCell className="text-right">
+                    <Badge
+                      className="text-xs px-2 py-1"
+                      variant={
+                        app.status === "accepted"
+                          ? "success"
+                          : app.status === "rejected"
+                          ? "destructive"
+                          : "secondary"
+                      }
+                    >
+                      {app.status.charAt(0).toUpperCase() + app.status.slice(1)}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      )}
     </div>
   );
 };

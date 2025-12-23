@@ -30,23 +30,26 @@ const CategoryCarousal = () => {
 
   return (
     <div>
-      <Carousel className="w-full max-w-xl mx-auto my-20">
-        <CarouselContent>
-          {category.map((cat, index) => (
-            <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-              <Button
-                onClick={() => searchJobHandler(cat)}
-                variant="outline"
-                className="rounded-full"
-              >
-                {cat}
-              </Button>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
+      <div className="my-16 text-center">
+        <h2 className="text-xl font-semibold mb-6">Browse Jobs by Category</h2>
+        <Carousel className="w-full max-w-4xl mx-auto my-16">
+          <CarouselContent>
+            {category.map((cat, index) => (
+              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                <Button
+                  onClick={() => searchJobHandler(cat)}
+                  variant="outline"
+                  className="rounded-full px-6 py-3 text-sm sm:text-base border-gray-300 hover:bg-[#6A38C2] hover:text-white transition"
+                >
+                  {cat}
+                </Button>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      </div>
     </div>
   );
 };

@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import store from "@/redux/store";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import UploadMandatoryNote from "./shared/UploadMandatoryNote";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const Home = () => {
   return (
     <div>
       <Navbar />
+      <UploadMandatoryNote/>
       <HeroSection />
       <CategoryCarousal />
       <LatestJobs />

@@ -135,12 +135,16 @@ const PostJob = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex items-center justify-center w-screen my-5">
+      <div className="flex items-center justify-center w-full px-4 my-5">
         <form
           onSubmit={submitHandler}
-          className="p-8 max-w-4xl border border-gray-200 shadow-lg rounded-md"
+          className="p-5 sm:p-8 max-w-4xl border border-gray-200 shadow-lg rounded-md"
         >
-          <div className="grid grid-cols-2 gap-2">
+          <h1 className="text-xl font-bold mb-6">
+            {isEdit ? "Update Job" : "Post a New Job"}
+          </h1>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label>Title</Label>
               <Input
@@ -148,7 +152,7 @@ const PostJob = () => {
                 name="title"
                 value={input.title}
                 onChange={changeEventHandler}
-                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-2"
               />
             </div>
             <div>
@@ -158,7 +162,7 @@ const PostJob = () => {
                 name="description"
                 value={input.description}
                 onChange={changeEventHandler}
-                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-2"
               />
             </div>
             <div>
@@ -168,17 +172,20 @@ const PostJob = () => {
                 name="requirements"
                 value={input.requirements}
                 onChange={changeEventHandler}
-                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-2"
               />
             </div>
             <div>
               <Label>Salary</Label>
+              <p className="text-xs text-gray-500">
+                Enter numbers only (e.g. 5 for 5 LPA)
+              </p>
               <Input
                 type="text"
                 name="salary"
                 value={input.salary}
                 onChange={changeEventHandler}
-                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-2"
               />
             </div>
             <div>
@@ -188,14 +195,14 @@ const PostJob = () => {
                 name="location"
                 value={input.location}
                 onChange={changeEventHandler}
-                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-2"
               />
             </div>
 
             <div>
               <Label>Job Type</Label>
               <Select onValueChange={selectJobHandler}>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder={input.jobType || "Select"} />
                 </SelectTrigger>
                 <SelectContent>
@@ -210,12 +217,15 @@ const PostJob = () => {
 
             <div>
               <Label>Experience Level</Label>
+              <p className="text-xs text-gray-500">
+                Enter numbers only (e.g. 5 for 5 years)
+              </p>
               <Input
                 type="text"
                 name="experience"
                 value={input.experience}
                 onChange={changeEventHandler}
-                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-2"
               />
             </div>
             <div>
@@ -225,33 +235,37 @@ const PostJob = () => {
                 name="position"
                 value={input.position}
                 onChange={changeEventHandler}
-                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-2"
               />
             </div>
             {companies.length > 0 && (
-              <Select onValueChange={selectChangeHandler}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select a Company" />
-                </SelectTrigger>
-                <SelectContent>
-                  {companies?.map((company) => {
-                    return (
-                      companies?.length > 0 && (
-                        <SelectItem
-                          key={company?._id}
-                          value={company?.name?.toLowerCase()}
-                        >
-                          {company?.name}
-                        </SelectItem>
-                      )
-                    );
-                  })}
-                </SelectContent>
-              </Select>
+              <div>
+                <Label>Company</Label>
+
+                <Select onValueChange={selectChangeHandler}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select a Company" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {companies?.map((company) => {
+                      return (
+                        companies?.length > 0 && (
+                          <SelectItem
+                            key={company?._id}
+                            value={company?.name?.toLowerCase()}
+                          >
+                            {company?.name}
+                          </SelectItem>
+                        )
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+              </div>
             )}
           </div>
           {loading ? (
-            <Button className="w-full my-4">
+            <Button className="w-full my-4" disabled>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait
             </Button>
           ) : (
@@ -260,7 +274,7 @@ const PostJob = () => {
             </Button>
           )}
           {companies.length === 0 && (
-            <p className="text-red-600 font-bold text-center my-3">
+            <p className="text-red-500 text-sm font-medium text-center my-3">
               *Please register a company first, before posting a job
             </p>
           )}

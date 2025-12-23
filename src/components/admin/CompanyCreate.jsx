@@ -10,6 +10,7 @@ import Navbar from "../shared/Navbar";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import UploadMandatoryNote from "../shared/UploadMandatoryNote";
 
 const CompanyCreate = () => {
   const navigate = useNavigate();

@@ -31,14 +31,12 @@ const Navbar = () => {
         toast.success(res.data.message);
       }
     } catch (error) {
-      toast.error(
-        error?.response?.data?.message || "Logout failed"
-      );
+      toast.error(error?.response?.data?.message || "Logout failed");
     }
   };
 
   return (
-    <header className="bg-white shadow-sm">
+    <header className="bg-white shadow-sm relative z-40">
       {/* FULL WIDTH BAR */}
       <div className="flex items-center justify-between h-16 px-4 md:px-0 md:max-w-7xl md:mx-auto">
         {/* Logo */}
@@ -51,14 +49,24 @@ const Navbar = () => {
           <ul className="flex font-medium items-center gap-5">
             {user && user.role === "recruiter" ? (
               <>
-                <li><Link to="/admin/companies">Companies</Link></li>
-                <li><Link to="/admin/jobs">Jobs</Link></li>
+                <li>
+                  <Link to="/admin/companies">Companies</Link>
+                </li>
+                <li>
+                  <Link to="/admin/jobs">Jobs</Link>
+                </li>
               </>
             ) : (
               <>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/jobs">Jobs</Link></li>
-                <li><Link to="/browse">Browse</Link></li>
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                <li>
+                  <Link to="/jobs">Jobs</Link>
+                </li>
+                <li>
+                  <Link to="/browse">Browse</Link>
+                </li>
               </>
             )}
           </ul>
@@ -82,22 +90,23 @@ const Navbar = () => {
                     src={user?.profile?.profilePhoto}
                     className="w-10 h-10 rounded-full object-cover"
                   />
-                  <AvatarFallback>
-                    {user?.fullname?.[0]}
-                  </AvatarFallback>
+                  <AvatarFallback>{user?.fullname?.[0]}</AvatarFallback>
                 </Avatar>
               </PopoverTrigger>
 
-              <PopoverContent className="w-72 p-4">
+              <PopoverContent
+                side="bottom"
+                align="end"
+                sideOffset={8}
+                className="w-72 p-4 z-50"
+              >
                 <div className="flex gap-4 mb-3">
                   <Avatar>
                     <AvatarImage
                       src={user?.profile?.profilePhoto}
                       className="w-10 h-10 rounded-full"
                     />
-                    <AvatarFallback>
-                      {user?.fullname?.[0]}
-                    </AvatarFallback>
+                    <AvatarFallback>{user?.fullname?.[0]}</AvatarFallback>
                   </Avatar>
                   <div>
                     <h4 className="font-medium">{user?.fullname}</h4>
@@ -129,10 +138,7 @@ const Navbar = () => {
         </div>
 
         {/* MOBILE MENU BUTTON */}
-        <button
-          className="md:hidden"
-          onClick={() => setOpen(!open)}
-        >
+        <button className="md:hidden" onClick={() => setOpen(!open)}>
           {open ? <X /> : <Menu />}
         </button>
       </div>
@@ -141,50 +147,76 @@ const Navbar = () => {
       {open && (
         <div className="md:hidden border-t bg-white px-4 py-4 space-y-4">
           <ul className="space-y-3 font-medium">
-            <li><Link to="/" onClick={() => setOpen(false)}>Home</Link></li>
-            <li><Link to="/jobs" onClick={() => setOpen(false)}>Jobs</Link></li>
-            <li><Link to="/browse" onClick={() => setOpen(false)}>Browse</Link></li>
+            {user && user.role === "recruiter" ? (
+              <>
+                <li>
+                  <Link to="/admin/companies" onClick={() => setOpen(false)} className="block px-2 py-2 rounded-md hover:bg-gray-100">
+                    Companies
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/admin/jobs" onClick={() => setOpen(false)} className="block px-2 py-2 rounded-md hover:bg-gray-100">
+                    Jobs
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to="/" onClick={() => setOpen(false)} className="block px-2 py-2 rounded-md hover:bg-gray-100">
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/jobs" onClick={() => setOpen(false)} className="block px-2 py-2 rounded-md hover:bg-gray-100">
+                    Jobs
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/browse" onClick={() => setOpen(false)} className="block px-2 py-2 rounded-md hover:bg-gray-100">
+                    Browse
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
 
           {user ? (
-  <div className="flex flex-col gap-3">
-    {user.role === "student" && (
-      <Link
-        to="/profile"
-        onClick={() => setOpen(false)}
-        className="flex items-center gap-2 text-sm font-medium"
-      >
-        <User2 size={18} />
-        View Profile
-      </Link>
-    )}
+            <div className="flex flex-col gap-3">
+              {user.role === "student" && (
+                <Link
+                  to="/profile"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-2 text-sm font-medium"
+                >
+                  <User2 size={18} />
+                  View Profile
+                </Link>
+              )}
 
-    <button
-      onClick={() => {
-        setOpen(false);
-        logoutHandler();
-      }}
-      className="flex items-center gap-2 text-sm font-medium text-red-500"
-    >
-      <LogOut size={18} />
-      Logout
-    </button>
-  </div>
-) : (
-  <div className="flex flex-col gap-2">
-    <Link to="/login">
-      <Button variant="outline" className="w-full">
-        Login
-      </Button>
-    </Link>
-    <Link to="/signup">
-      <Button className="w-full bg-[#6A38C2]">
-        Signup
-      </Button>
-    </Link>
-  </div>
-)}
-
+              <button
+                onClick={() => {
+                  setOpen(false);
+                  logoutHandler();
+                }}
+                className="flex items-center gap-2 text-sm font-medium text-red-500"
+              >
+                <LogOut size={18} />
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              <Link to="/login">
+                <Button variant="outline" className="w-full">
+                  Login
+                </Button>
+              </Link>
+              <Link to="/signup">
+                <Button className="w-full bg-[#6A38C2]">Signup</Button>
+              </Link>
+            </div>
+          )}
         </div>
       )}
     </header>

@@ -61,17 +61,19 @@ const Login = () => {
   }, [user, navigate]);
 
   return (
-    <div className="font-bold">
+    <div>
       <Navbar />
-      <div className="flex items-center justify-center max-w-7xl mx-auto">
+      <div className="flex items-center justify-center max-w-7xl mx-auto my-12">
         <form
           onSubmit={submitHandler}
-          className="w-3/5 border border-gray-200 rounded-md p-4 my-10"
+          className="w-full sm:w-3/5 border border-gray-200 rounded-md p-4 my-10"
         >
           <h1 className="font-bold text-xl mb-5">Login</h1>
 
           <div className="my-2">
-            <Label htmlFor="email">Email</Label>
+            <Label className="bold" htmlFor="email">
+              Email
+            </Label>
             <Input
               id="email"
               type="email"
@@ -82,7 +84,9 @@ const Login = () => {
             />
           </div>
           <div className="my-2">
-            <Label htmlFor="password">Password</Label>
+            <Label className="bold" htmlFor="password">
+              Password
+            </Label>
             <Input
               id="password"
               type="password"
@@ -95,7 +99,7 @@ const Login = () => {
           <div className="flex flex-wrap items-center justify-between gap-4">
             {/* Radio Buttons */}
             <div className="flex gap-4">
-              <label className="flex items-center gap-2">
+              <label className="flex items-center gap-2 py-2 cursor-pointer">
                 <input
                   id="r1"
                   type="radio"
@@ -104,10 +108,12 @@ const Login = () => {
                   checked={input.role === "student"}
                   onChange={changeEventHandler}
                 />
-                <Label htmlFor="r1">Student</Label>
+                <Label className="bold" htmlFor="r1">
+                  Student
+                </Label>
               </label>
 
-              <label className="flex items-center gap-2">
+              <label className="flex items-center gap-2 py-2 cursor-pointer">
                 <input
                   id="r2"
                   type="radio"
@@ -116,13 +122,15 @@ const Login = () => {
                   checked={input.role === "recruiter"}
                   onChange={changeEventHandler}
                 />
-                <Label htmlFor="r2">Recruiter</Label>
+                <Label className="bold" htmlFor="r2">
+                  Recruiter
+                </Label>
               </label>
             </div>
           </div>
 
           {loading ? (
-            <Button className="w-full my-4">
+            <Button className="w-full my-4" disabled>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait
             </Button>
           ) : (
@@ -131,12 +139,15 @@ const Login = () => {
             </Button>
           )}
 
-          <span className="text-sm">
+          <p className="text-sm text-gray-600 text-center">
             Don't have an account?{" "}
-            <Link className="text-blue-600" to="/signup">
+            <Link
+              className="text-blue-600 font-medium hover:underline"
+              to="/signup"
+            >
               Signup
             </Link>
-          </span>
+          </p>
         </form>
       </div>
     </div>

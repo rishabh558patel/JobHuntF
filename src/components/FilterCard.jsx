@@ -25,30 +25,43 @@ const FilterCard = () => {
   };
   useEffect(() => {
     dispatch(setSearchedQuery(selectedValue));
-    console.log(selectedValue);
   }, [selectedValue]);
 
   return (
-    <div className="w-full bg-white p-3 rounded-md">
-      <h1 className="font-bold text-lg">Filter Jobs</h1>
-      <hr className="mt-3" />
+    <div className="w-full bg-white p-4 rounded-md">
+      <div className="flex items-center justify-between">
+        <h1 className="font-bold text-lg">Filter Jobs</h1>
+        {selectedValue && (
+          <button
+            onClick={() => setSelectedValue("")}
+            className="text-sm text-[#6A38C2] hover:underline"
+          >
+            Clear
+          </button>
+        )}
+      </div>
+
       <RadioGroup value={selectedValue} onValueChange={changeHandler}>
         {filterData.map((data, index) => (
-          <div key={index}>
-            <h1 className="font-bold text-lg">{data.filterType}</h1>
+          <div className="mt-4" key={index}>
+            <h1 className="font-bold text-lg mb-2">{data.filterType}</h1>
             {data.array.map((item, subIndex) => {
               const itemId = `id${index}-${subIndex}`;
               return (
                 <div
                   key={subIndex}
-                  className="flex items-center space-x-2 my-2"
+                  className={`flex items-center gap-3 py-2 px-2 rounded-md ${
+                    selectedValue === item ? "bg-gray-100" : ""
+                  }`}
                 >
                   <RadioGroupItem
                     value={item}
                     className="cursor-pointer"
                     id={itemId}
                   />
-                  <Label htmlFor={itemId}>{item}</Label>
+                  <Label htmlFor={itemId} className="cursor-pointer text-sm">
+                    {item}
+                  </Label>
                 </div>
               );
             })}

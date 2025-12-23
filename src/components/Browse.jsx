@@ -15,27 +15,24 @@ const Browse = () => {
   const filteredJobs = allJobs.filter((job) =>
     job.title.toLowerCase().includes(searchedQuery.toLowerCase())
   );
-  console.log("searchedQuery from Redux:", searchedQuery);
-  console.log("All jobs:", allJobs);
-  console.log("Filtered jobs:", filteredJobs);
-  
-  // useEffect(() => {
-  //   return () => {
-  //     dispatch(setSearchedQuery(""));
-  //   };
-  // }, []);
 
   return (
     <div>
       <Navbar />
-      <div className="max-w-7xl mx-auto my-10">
-        <h1 className="font-bold text-xl my-10">
+      <div className="max-w-7xl mx-auto mt-6 px-4">
+        <h1 className="font-bold text-2xl sm:text-3xl mb-6">
           Search Results ({filteredJobs.length})
         </h1>
-        <div className="grid grid-cols-3 gap-4">
-          {filteredJobs.map((job) => {
-            return <Job key={job._id} job={job} />;
-          })}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredJobs.length === 0 ? (
+            <p className="text-gray-500 text-center col-span-full mt-20">
+              No jobs match your search.
+            </p>
+          ) : (
+            filteredJobs.map((job) => {
+              return <Job key={job._id} job={job} />;
+            })
+          )}
         </div>
       </div>
     </div>
